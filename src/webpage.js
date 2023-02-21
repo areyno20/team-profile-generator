@@ -2,14 +2,14 @@ const manager = managerData => {
     return `
     <div class="card employee-card">
         <div class="card-header">
-            <h2 class="card-title">${managerData.name}</h2>
+            <h2 class="card-title">${managerData.getName()}</h2>
             <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${managerData.getRole()}</h3>
         </div>
         <div class="card-body">
             <ul class="list-group">
-                <li class="list-group-item">ID: ${managerData.id}</li>
-                <li class="list-group-item">Email: <a href="mailto:${managerData.email}">${managerData.email}</a></li>
-                <li class="list-group-item">Office number: ${managerData.officeNumber}</li>
+                <li class="list-group-item">ID: ${managerData.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${managerData.getEmail()}">${managerData.getEmail()}</a></li>
+                <li class="list-group-item">Office number: ${managerData.getOfficeNumber()}</li>
             </ul>
         </div>
     </div>
@@ -20,13 +20,14 @@ const engineer = engineerData => {
     return `
     <div class="card employee-card">
         <div class="card-header">
-            <h2 class="card-title">${engineerData.name}</h2>
+            <h2 class="card-title">${engineerData.getName()}</h2>
             <h3 class="card-title"><i class="fas fa-glasses mr-2"></i>${engineerData.getRole()}</h3>
         </div>
         <div class="card-body">
             <ul class="list-group">
-                <li class="list-group-item">ID: ${engineerData.id}</li>
-                <li class="list-group-item">Email: <a href="mailto:${engineerData.email}">${engineerData.email}</a></li>
+                <li class="list-group-item">ID: ${engineerData.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${engineerData.getEmail()}">${engineerData.getEmail()}</a></li>
+                <li class="list-group-item">GitHub: <a href="https://www.github.com/${engineerData.getGithub()}" target="_blank">www.github.com/${engineerData.getGithub()}</a></li>
             </ul>
         </div>
     </div>
@@ -37,13 +38,13 @@ const intern = internData => {
     return `
     <div class="card employee-card">
         <div class="card-header">
-            <h2 class="card-title">${internData.name}</h2>
+            <h2 class="card-title">${internData.getName()}</h2>
             <h3 class="card-title"><i class="fas fa-user-graduate mr-2"></i>${internData.getRole()}</h3>
             </div>
             <div class="card-body">
-                <li class="list-group-item">ID: ${internData.id}</li>
-                <li class="list-group-item">Email: <a href="mailto:${internData.email}">${internData.email}</a></li>
-                <li class="list-group-item">School: ${internData.school}</li>
+                <li class="list-group-item">ID: ${internData.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${internData.getEmail()}">${internData.getEmail()}</a></li>
+                <li class="list-group-item">School: ${internData.getSchool()}</li>
             </ul>
         </div>
     </div>
@@ -52,12 +53,15 @@ const intern = internData => {
 
 const employees = employeesData => {
     let html = '';
+    
     for (let i = 0; i < employeesData.length; i++) {
         if (employeesData[i].getRole() === 'Manager') {
             html += manager(employeesData[i]);
-        } else if (employeesData[i].getRole() === 'Engineer') {
+        }
+        if (employeesData[i].getRole() === 'Engineer') {
             html += engineer(employeesData[i]);
-        } else if (employeesData[i].getRole() === 'Intern') {
+        }
+        if (employeesData[i].getRole() === 'Intern') {
             html += intern(employeesData[i]);
         }
     }
@@ -89,7 +93,7 @@ const template = data => {
         <div class="container">
             <div class="row">
                 <div class="team-area col-12 d-flex justify-content-center">
-                    ${employees}
+                    ${employees(data)}
                 </div>
             </div>
         </div>

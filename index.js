@@ -3,38 +3,38 @@ const template  = require('./src/webpage.js');
 const generateHTML = require('./src/generateHTML.js');
 
 
-const {Manager, managerQuestions} = require('./lib/Manager');
-const {Engineer, engineerQuestions} = require('./lib/Engineer');
-const {Intern, internQuestions} = require('./lib/Intern');
+const {Manager, managerQuestionsData} = require('./lib/Manager');
+const {Engineer, engineerQuestionsData} = require('./lib/Engineer');
+const {Intern, internQuestionsData} = require('./lib/Intern');
 
 const employees = [];
 
-const init = () => { managerQuestions()};
+const init = () => {managerQuestions()}
 
 const managerQuestions = () => {
-    inquirer.prompt(managerQuestions)
+    inquirer.prompt(managerQuestionsData)
     .then((answers) => {
-        const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-        employees.push(manager);
-        addEmployee();
+        answers = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+        employees.push(answers);
+        employeePrompt();
     })
 }
 
 const engineerQuestions = () => {
-    inquirer.prompt(engineerQuestions)
+    inquirer.prompt(engineerQuestionsData)
     .then((answers) => {
         const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
         employees.push(engineer);
-        addEmployee();
+        employeePrompt();
     })
 }
 
 const internQuestions = () => {
-    inquirer.prompt(internQuestions)
+    inquirer.prompt(internQuestionsData)
     .then((answers) => {
         const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
         employees.push(intern);
-        addEmployee();
+        employeePrompt();
     })
 }
 
@@ -44,7 +44,11 @@ const employeePrompt = () => {
             type: 'list',
             name: 'employeeType',
             message: 'What type of employee would you like to add?',
-            choices: ['Engineer', 'Intern', 'None']
+            choices: [
+                {name: 'Engineer', value: 'Engineer'},
+                {name: 'Intern', value: 'Intern'},
+                {name: 'Done', value: 'Done'}
+            ]
         }
     ])
     .then((answers) => {
@@ -54,7 +58,7 @@ const employeePrompt = () => {
         if (answers.employeeType === 'Intern') {
             internQuestions();
         };
-        if (answers.employeeType === 'None') {
+        if (answers.employeeType === 'Done') {
             let html = template(employees);
             console.log(html);
             generateHTML(html);
