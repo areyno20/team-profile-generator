@@ -13,17 +13,17 @@ const init = () => {managerQuestions()}
 
 const managerQuestions = () => {
     inquirer.prompt(managerQuestionsData)
-    .then((answers) => {
-        answers = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-        employees.push(answers);
+    .then((manager) => {
+        manager = new Manager(manager.name, manager.id, manager.email, manager.officeNumber);
+        employees.push(manager);
         employeePrompt();
     })
 }
 
 const engineerQuestions = () => {
     inquirer.prompt(engineerQuestionsData)
-    .then((answers) => {
-        const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+    .then((engineer) => {
+        engineer = new Engineer(engineer.name, engineer.id, engineer.email, engineer.github);
         employees.push(engineer);
         employeePrompt();
     })
@@ -31,8 +31,8 @@ const engineerQuestions = () => {
 
 const internQuestions = () => {
     inquirer.prompt(internQuestionsData)
-    .then((answers) => {
-        const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+    .then((intern) => {
+        intern = new Intern(intern.name, intern.id, intern.email, intern.school);
         employees.push(intern);
         employeePrompt();
     })
